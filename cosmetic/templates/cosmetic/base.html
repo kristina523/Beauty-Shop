@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Косметический магазин</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    {% load static %}
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <style>
+    :root {
+        --pink-light: #FFE4E1;
+        --pink-main: #FF69B4;
+        --pink-dark: #DB7093;
+    }
+
+    .text-pink {
+        color: var(--pink-main);
+    }
+
+    .btn-pink {
+        background-color: var(--pink-main);
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-pink:hover {
+        background-color: var(--pink-dark);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .btn-pink-dark {
+        background-color: var(--pink-dark);
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-pink-dark:hover {
+        background-color: var(--pink-main);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .btn-outline-pink {
+        color: var(--pink-main);
+        border-color: var(--pink-main);
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-pink:hover {
+        background-color: var(--pink-main);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .navbar {
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        background-color: white !important;
+    }
+
+    .navbar-brand {
+        font-weight: 600;
+        font-size: 1.5rem;
+    }
+
+    .nav-link {
+        color: var(--pink-dark) !important;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: var(--pink-main) !important;
+        transform: translateY(-2px);
+    }
+
+    .cart-icon {
+        position: relative;
+    }
+
+    .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: var(--pink-main);
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 0.7rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    footer {
+        background-color: #f8f9fa;
+        border-top: 1px solid var(--pink-light);
+    }
+
+    footer h5 {
+        color: var(--pink-main);
+        font-weight: 600;
+    }
+
+    footer a {
+        color: var(--pink-dark);
+        transition: all 0.3s ease;
+    }
+
+    footer a:hover {
+        color: var(--pink-main);
+        text-decoration: none;
+        transform: translateX(5px);
+    }
+
+    .alert {
+        border-radius: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .alert {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    /* Медиа-запросы */
+    @media (max-width: 768px) {
+        .navbar-brand {
+            font-size: 1.2rem;
+        }
+        
+        footer {
+            text-align: center;
+        }
+        
+        footer .col-md-4 {
+            margin-bottom: 30px;
+        }
+    }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand text-pink" href="{% url 'cosmetic:home' %}">
+                <i class="fas fa-spa"></i> Beauty Shop
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cosmetic:home' %}">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cosmetic:product_list' %}">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cosmetic:about' %}">О нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cosmetic:contacts' %}">Контакты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cosmetic:blog' %}">Блог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cosmetic:map' %}">Карта</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cosmetic:cart' %}">
+                            <div class="cart-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                                {% if cart_count %}
+                                <span class="cart-count">{{ cart_count }}</span>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cosmetic:profile' %}">
+                            <i class="fas fa-user"></i> Профиль
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'logout' %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn nav-link">
+                                <i class="fas fa-sign-out-alt"></i> Выход
+                            </button>
+                        </form>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cosmetic:login' %}">
+                            <i class="fas fa-sign-in-alt"></i> Вход
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="mt-5 py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Beauty Shop</h5>
+                    <p>Ваш надежный магазин косметики</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Информация</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'cosmetic:delivery' %}">Доставка</a></li>
+                        <li><a href="{% url 'cosmetic:payment' %}">Оплата</a></li>
+                        <li><a href="{% url 'cosmetic:guarantee' %}">Гарантии</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Контакты</h5>
+                    <p>
+                        <i class="fas fa-phone"></i> +7 (XXX) XXX-XX-XX<br>
+                        <i class="fas fa-envelope"></i> info@beautyshop.ru<br>
+                        <i class="fas fa-map-marker-alt"></i> г. Москва, ул. Примерная, д. 1
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; {% now "Y" %} Beauty Shop. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

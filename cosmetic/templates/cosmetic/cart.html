@@ -1,0 +1,110 @@
+{% extends 'cosmetic/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-pink">Корзина</h1>
+    
+    {% if cart_items %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Товар</th>
+                        <th>Цена</th>
+                        <th>Количество</th>
+                        <th>Итого</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                {% if item.product.image %}
+                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 50px; height: 50px; object-fit: cover;">
+                                {% else %}
+                                    <img src="{% static 'images/no-image.png' %}" alt="No image" style="width: 50px; height: 50px; object-fit: cover;">
+                                {% endif %}
+                                <span class="ms-3">{{ item.product.name }}</span>
+                            </div>
+                        </td>
+                        <td>{{ item.product.price }} ₽</td>
+                        <td>
+                            <form method="post" action="{% url 'cosmetic:update_cart_item' item.id %}" class="d-flex align-items-center">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control" style="width: 70px;">
+                                <button type="submit" class="btn btn-sm btn-pink ms-2">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            </form>
+                        </td>
+                        <td>{{ item.get_cost }} ₽</td>
+                        <td>
+                            <a href="{% url 'cosmetic:remove_from_cart' item.id %}" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-end"><strong>Итого:</strong></td>
+                        <td><strong>{{ total_price }} ₽</strong></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'cosmetic:product_list' %}" class="btn btn-outline-pink">
+                <i class="fas fa-arrow-left"></i> Продолжить покупки
+            </a>
+            <div>
+                <a href="{% url 'cosmetic:clear_cart' %}" class="btn btn-outline-danger me-2">
+                    <i class="fas fa-trash"></i> Очистить корзину
+                </a>
+                <a href="#" class="btn btn-pink">
+                    Оформить заказ <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <p>Ваша корзина пуста.</p>
+            <a href="{% url 'cosmetic:product_list' %}" class="btn btn-pink mt-3">
+                <i class="fas fa-shopping-bag"></i> Перейти к покупкам
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.btn-pink {
+    background-color: #FF69B4;
+    color: white;
+}
+
+.btn-pink:hover {
+    background-color: #FF1493;
+    color: white;
+}
+
+.btn-outline-pink {
+    color: #FF69B4;
+    border-color: #FF69B4;
+}
+
+.btn-outline-pink:hover {
+    background-color: #FF69B4;
+    color: white;
+}
+
+.text-pink {
+    color: #FF69B4;
+}
+</style>
+{% endblock %}

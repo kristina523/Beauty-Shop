@@ -1,0 +1,128 @@
+{% extends 'cosmetic/base.html' %}
+
+{% block title %}Контакты - Cosmetic Shop{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Наши контакты</h1>
+    
+    <div class="contact-section">
+        <div class="contact-info">
+            <h2>Контактная информация</h2>
+            <p><i class="fas fa-phone"></i> <strong>Телефон:</strong> +7 (123) 456-78-90</p>
+            <p><i class="fas fa-envelope"></i> <strong>Email:</strong> info@cosmetic-shop.ru</p>
+            <p><i class="fas fa-map-marker-alt"></i> <strong>Адрес:</strong> г. Москва, ул. Косметическая, д. 1</p>
+            <a href="{% url 'cosmetic:home' %}" class="back-home">
+                <i class="fas fa-arrow-left"></i> На главную
+            </a>
+        </div>
+        
+        <div class="work-hours">
+            <h2>Часы работы</h2>
+            <p><strong>Пн-Пт:</strong> 9:00 - 20:00</p>
+            <p><strong>Сб-Вс:</strong> 10:00 - 18:00</p>
+        </div>
+    </div>
+    
+    <div class="feedback-form">
+        <h2>Обратная связь</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="name" placeholder="Ваше имя" required>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Ваш email" required>
+            </div>
+            <div class="form-group">
+                <textarea name="message" placeholder="Ваше сообщение" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Отправить</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .page-content {
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 20px;
+    }
+    
+    .contact-section {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 40px;
+    }
+    
+    .contact-info, .work-hours {
+        width: 48%;
+        background: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .contact-info p, .work-hours p {
+        margin: 15px 0;
+        font-size: 16px;
+    }
+    
+    .feedback-form {
+        background: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    input, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    
+    textarea {
+        height: 150px;
+        resize: vertical;
+    }
+    
+    .submit-btn {
+        background: #ff6b81;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s;
+    }
+
+    .back-home {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 25px;
+        background-color: #ff6b81; /* Розовый цвет */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    .back-home:hover {
+        background-color: #ff4757; /* Более темный розовый при наведении */
+    }
+
+    .submit-btn:hover {
+        background: #ff4757;
+    }
+</style>
+{% endblock %}
+

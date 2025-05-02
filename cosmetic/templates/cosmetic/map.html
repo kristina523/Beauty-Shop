@@ -1,0 +1,103 @@
+{% extends 'cosmetic/base.html' %}
+
+{% block title %}Карта проезда - Cosmetic Shop{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Как нас найти</h1>
+    
+    <div class="map-container">
+        <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A1a2b3c4d5e6f7g8h9i0j&amp;source=constructor" 
+                width="100%" height="400" frameborder="0"></iframe>
+    </div>
+    
+    <div class="transport-info">
+        <div class="transport-option">
+            <h3><i class="fas fa-subway"></i> Метро</h3>
+            <p>Станция "Косметическая", выход №5</p>
+        </div>
+        
+        <div class="transport-option">
+            <h3><i class="fas fa-bus"></i> Автобусы</h3>
+            <p>№ 123, 456, 789 до остановки "Улица Косметическая"</p>
+        </div>
+        
+        <div class="transport-option">
+            <h3><i class="fas fa-car"></i> Парковка</h3>
+            <p>Бесплатная парковка на территории торгового центра</p>
+        </div>
+    </div>
+    
+    <a href="{% url 'cosmetic:home' %}" class="back-home">
+        <i class="fas fa-arrow-left"></i> На главную
+    </a>
+</div>
+
+<style>
+    .page-content {
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 20px;
+    }
+    
+    .map-container {
+        margin-bottom: 30px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .transport-info {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+    
+    .transport-option {
+        width: 30%;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .transport-option:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .transport-option h3 {
+        color: #ff6b81;
+        margin-bottom: 10px;
+    }
+    
+    .back-home {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 20px;
+        background: #ff6b81; /* Розовый цвет */
+        color: white;
+        text-decoration: none;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .back-home:hover {
+        background: #e84393; /* Более темный розовый при наведении */
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    @media (max-width: 768px) {
+        .transport-option {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+

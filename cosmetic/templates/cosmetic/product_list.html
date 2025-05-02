@@ -1,0 +1,111 @@
+{% extends 'cosmetic/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{% static 'images/product1.jpg' %}" class="card-img-top" alt="Product 1" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Палетка теней</h5>
+                    <p class="card-text">Палетка теней с роскошной кремовой формулойа, состоящая из 16 ультра-пигментированных и легко растушевываемых нейтральных оттенков с матовым и блестящим финишем, которые ложатся на веко ровным слоем.
+                    <a href="#" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{% static 'images/product2.jpg' %}" class="card-img-top" alt="Product 2" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Тушь</h5>
+                    <p class="card-text">Сенсационная и самая нашумевшая премьера в декоративной косметике - тушь CABARET PREMIÈRE с эффектом сценического объема - выпускается не только не только в классическом черном цвете, но и в ярких ультрамодных оттенках: Violette, Blue, Green, Brown.
+
+                        Уникальная пластиковая щеточка с зауженным кончиком позволяет равномерно распределить тушь по ресницам, разделяя их и придавая феноменальный объем!</p>
+                    <a href="#" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{% static 'images/product3.jpg' %}" class="card-img-top" alt="Product 3" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Помада</h5>
+                    <p class="card-text">Добавьте красок вашему макияжу! Широкая палитра 3INA предлагает богатый выбор оттенков помады, которая подарит насыщенный цвет вашим губам.</p>
+                    <a href="#" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{% static 'images/product4.jpg' %}" class="card-img-top" alt="Product 4" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Тональный крем SPF 16
+                    </h5>
+                    <p class="card-text">Жидкий тональный крем Accord Parfait от L'Oreal Paris выравнивает тон, подстраивается к цвету и текстуре кожи. Заметно преображает кожу за 2 недели применения: кожа более гладкая и сияющая.
+
+                        Ультра-тонкие пигменты подстраиваются под тон и подтон кожи. Формула на 80%, состоящая из увлажняющего крема с гиалуроновой кислотой. 24 часа увлажнения вашей кожи. Естественный финиш, сияющая кожа. SPF 16.</p>
+                    <a href="#" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{% static 'images/product5.jpg' %}" class="card-img-top" alt="Product 5" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Объемная тушь с микроаппликатором 3D</h5>
+                    <p class="card-text">Эластичная формула слой за слоем создает желаемый объем от натурального до вау-эффекта. Чтобы одним движением прокрасить верхние, нижние и вот-даже-те-маленькие реснички в уголках глаз. 3D микро щеточка не упустит ни одну ресничку, легко наслаивая тушь каждым взмахом.
+                        Простое нанесение и легковесность обеспечивается за счет 200% водосвязующего полимера в составе.</p>
+                    <a href="#" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.card-img-top {
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.btn-primary {
+    background-color: #FF69B4;
+    border-color: #FF69B4;
+}
+
+.btn-primary:hover {
+    background-color: #FF1493;
+    border-color: #FF1493;
+}
+
+.card-title {
+    color: #FF69B4;
+    margin-bottom: 0.75rem;
+}
+
+.card-text {
+    color: #666;
+}
+</style>
+{% endblock %}

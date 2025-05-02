@@ -1,0 +1,113 @@
+{% extends 'cosmetic/base.html' %}
+
+{% block title %}Доставка - Cosmetic Shop{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Условия доставки</h1>
+    
+    <div class="delivery-options">
+        <div class="option">
+            <h2><i class="fas fa-truck"></i> Курьерская доставка</h2>
+            <p>Доставка по Москве в течение 1-2 дней</p>
+            <p><strong>Стоимость:</strong> 300 руб. (бесплатно при заказе от 3000 руб.)</p>
+        </div>
+        
+        <div class="option">
+            <h2><i class="fas fa-store"></i> Самовывоз</h2>
+            <p>Заберите заказ из нашего магазина по адресу: г. Москва, ул. Косметическая, д. 1</p>
+            <p><strong>Срок:</strong> Готов к выдаче через 1 час после оформления заказа</p>
+        </div>
+        
+        <div class="option">
+            <h2><i class="fas fa-plane"></i> Доставка по России</h2>
+            <p>Отправка через СДЭК или Почту России</p>
+            <p><strong>Срок:</strong> 3-10 дней в зависимости от региона</p>
+        </div>
+    </div>
+    
+    <a href="{% url 'cosmetic:home' %}" class="back-home">
+        <i class="fas fa-arrow-left"></i> На главную
+    </a>
+    
+    <div class="delivery-terms">
+        <h2>Условия доставки</h2>
+        <ul>
+            <li>Все заказы обрабатываются в течение 24 часов</li>
+            <li>Вы получите SMS-уведомление при отправке заказа</li>
+            <li>Оплата наличными или картой при получении</li>
+            <li>Возможность примерки косметики перед покупкой</li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .page-content {
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 20px;
+    }
+
+    .delivery-options {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+    }
+
+    .option {
+        width: 30%;
+        background: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+    }
+
+    .option h2 {
+        color: #ff6b81;
+        margin-bottom: 15px;
+        font-size: 20px;
+    }
+
+    .back-home {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 20px;
+        background: #ff6b81; /* Розовый цвет */
+        color: white;
+        text-decoration: none;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .back-home:hover {
+        background: #e84393; /* Более темный розовый при наведении */
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .delivery-terms {
+        background: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .delivery-terms ul {
+        padding-left: 20px;
+    }
+
+    .delivery-terms li {
+        margin-bottom: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .option {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}

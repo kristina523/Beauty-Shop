@@ -1,0 +1,150 @@
+{% extends 'cosmetic/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="hero-section">
+    <div class="container-fluid px-0">
+        <div class="position-relative">
+            <img src="{% static 'images/hero-image.jpg' %}" 
+                 alt="Beauty Shop Hero" 
+                 class="w-100 hero-image"
+                 style="max-height: 600px; object-fit: cover;"
+                 onerror="this.style.backgroundColor='var(--pink-light)';">
+            <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
+                <h1 class="display-4 fw-bold mb-4">Добро пожаловать в Beauty Shop</h1>
+                <p class="lead mb-4">Откройте для себя мир красоты и ухода за собой</p>
+                <a href="{% url 'cosmetic:product_list' %}" class="btn btn-pink btn-lg">
+                    Перейти в каталог
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features-section py-5">
+    <div class="container">
+        <h2 class="text-center text-pink mb-5">Наши преимущества</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="feature-card text-center p-4">
+                    <i class="fas fa-truck fa-3x text-pink mb-3"></i>
+                    <h3>Бесплатная доставка</h3>
+                    <p>При заказе от 3000 рублей</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-card text-center p-4">
+                    <i class="fas fa-certificate fa-3x text-pink mb-3"></i>
+                    <h3>Оригинальная продукция</h3>
+                    <p>Гарантия подлинности</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-card text-center p-4">
+                    <i class="fas fa-headset fa-3x text-pink mb-3"></i>
+                    <h3>Консультации</h3>
+                    <p>Профессиональная помощь в выборе</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="new-products-section py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center text-pink mb-5">Новые поступления</h2>
+        <div class="row">
+            {% for product in new_products %}
+            <div class="col-md-3 mb-4">
+                <div class="card product-card h-100">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    {% else %}
+                    <img src="{% static 'images/no-image.png' %}" class="card-img-top" alt="No image">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title text-pink">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description|truncatewords:10 }}</p>
+                        <p class="card-text"><strong>{{ product.price }} ₽</strong></p>
+                        <a href="{% url 'cosmetic:product_detail' product.id %}" class="btn btn-pink">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+
+.hero-section {
+    margin-bottom: 3rem;
+}
+
+.hero-image {
+    filter: brightness(0.7);
+    transition: all 0.3s ease;
+}
+
+.hero-section .btn-pink {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+}
+
+.hero-section h1 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-section p {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+
+.feature-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+}
+
+
+.product-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-section p {
+        font-size: 1rem;
+    }
+    
+    .hero-section .btn-pink {
+        padding: 0.6rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+</style>
+{% endblock %}

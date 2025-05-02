@@ -1,0 +1,208 @@
+{% extends 'cosmetic/base.html' %}
+{% load static %}  
+
+{% block title %}Блог - Cosmetic Shop{% endblock %}
+
+{% block content %}
+<div class="blog-container">
+    <div class="blog-header">
+        <h1 class="blog-title">Блог о косметике</h1>
+        <p class="blog-subtitle">Советы, тренды и новинки от экспертов</p>
+        <a href="{% url 'cosmetic:home' %}" class="back-home">
+            <i class="fas fa-arrow-left"></i> На главную
+        </a>
+    </div>
+    
+    <div class="blog-posts">
+        <div class="post-card">
+            <div class="post-image">
+                <img src="{% static 'images/blog1.jpg' %}" alt="Уход за кожей">  
+                <div class="post-date">15 ЯНВ</div>
+            </div>
+            <div class="post-content">
+                <h2 class="post-title">10 советов по уходу за кожей зимой</h2>
+                <p class="post-excerpt">Зимой кожа особенно нуждается в уходе. Узнайте, как сохранить ее здоровой и сияющей в холодное время года.</p>
+                <div class="post-footer">
+                    <a href="#" class="read-more-btn">Читать статью <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="post-card">
+            <div class="post-image">
+                <img src="{% static 'images/blog2.jpg' %}" alt="Новинки косметики">  
+                <div class="post-date">5 ЯНВ</div>
+            </div>
+            <div class="post-content">
+                <h2 class="post-title">Топ-5 новинок косметики 2023 года</h2>
+                <p class="post-excerpt">Мы собрали самые интересные новинки косметического рынка, которые стоит попробовать в этом году.</p>
+                <div class="post-footer">
+                    <a href="#" class="read-more-btn">Читать статью <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="post-card">
+            <div class="post-image">
+                <img src="{% static 'images/blog3.jpg' %}" alt="Макияж">  
+                <div class="post-date">20 ДЕК</div>
+            </div>
+            <div class="post-content">
+                <h2 class="post-title">Тренды макияжа весна-лето 2023</h2>
+                <p class="post-excerpt">Какие модные тенденции в макияже будут актуальны в новом сезоне? Рассказываем о главных трендах.</p>
+                <div class="post-footer">
+                    <a href="#" class="read-more-btn">Читать
+
+                        <a href="#" class="read-more-btn">Читать статью <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        /* Основные стили */
+        .blog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .blog-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .blog-title {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .blog-subtitle {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: #ff6b81; /* Розовый цвет */
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            border: none;
+            font-weight: bold;
+        }
+        
+        .back-home:hover {
+            background: #e84393; /* Более темный розовый при наведении */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .back-home i {
+            margin-right: 8px;
+        }
+        
+        /* Стили карточек статей */
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .post-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .post-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .post-card:hover .post-image img {
+            transform: scale(1.05);
+        }
+        
+        .post-date {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.9);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .post-content {
+            padding: 25px;
+        }
+        
+        .post-title {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        
+        .post-excerpt {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .post-footer {
+            border-top: 1px solid #f0f0f0;
+            padding-top: 15px;
+        }
+        
+        .read-more-btn {
+            display: inline-flex;
+            align-items: center;
+            background: #ff6b81; /* Розовый цвет */
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        
+        .read-more-btn:hover {
+            background: #e84393; /* Более темный розовый при наведении */
+            transform: translateY(-2px);
+        }
+        
+        .read-more-btn i {
+            margin-left: 8px;
+            font-size: 
+            font-size: 0.9rem;
+    }
+</style>
+{% endblock %}

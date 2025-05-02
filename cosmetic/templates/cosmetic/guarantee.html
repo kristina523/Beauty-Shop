@@ -1,0 +1,119 @@
+{% extends 'cosmetic/base.html' %}
+
+{% block title %}Гарантии - Cosmetic Shop{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h1>Наши гарантии</h1>
+    
+    <div class="guarantee-cards">
+        <div class="card">
+            <h2><i class="fas fa-certificate"></i> Гарантия подлинности</h2>
+            <p>Все товары в нашем магазине - 100% оригинальная продукция от официальных поставщиков.</p>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-exchange-alt"></i> Возврат и обмен</h2>
+            <p>Вы можете вернуть или обменять товар в течение 14 дней без объяснения причин.</p>
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-shield-alt"></i> Гарантия качества</h2>
+            <p>Если товар оказался бракованным, мы заменим его или вернем деньги.</p>
+        </div>
+    </div>
+    
+    <a href="{% url 'cosmetic:home' %}" class="back-home">
+        <i class="fas fa-arrow-left"></i> На главную
+    </a>
+    
+    <div class="return-terms">
+        <h2>Условия возврата</h2>
+        <ol>
+            <li>Товар должен быть в оригинальной упаковке</li>
+            <li>Сохранен товарный вид и все бирки</li>
+            <li>Наличие чека или электронного подтверждения покупки</li>
+        </ol>
+        
+        <p>Для оформления возврата свяжитесь с нами по телефону или через форму обратной связи.</p>
+    </div>
+</div>
+
+<style>
+    .page-content {
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 20px;
+    }
+    
+    .guarantee-cards {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+    }
+    
+    .card {
+        width: 30%;
+        background: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .card h2 {
+        color: #ff6b81;
+        margin-bottom: 15px;
+        font-size: 20px;
+    }
+    
+    .back-home {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 20px;
+        background: #ff6b81; /* Розовый цвет */
+        color: white;
+        text-decoration: none;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .back-home:hover {
+        background: #e84393; /* Более темный розовый при наведении */
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .return-terms {
+        background: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .return-terms ol {
+        padding-left: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .return-terms li {
+        margin-bottom: 10px;
+    }
+    
+    @media (max-width: 768px) {
+        .card {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+

@@ -1,0 +1,89 @@
+{% extends 'cosmetic/base.html' %}
+
+{% block title %}О нас - Cosmetic Shop{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #ffeef8; /* Светлый розовый фон */
+        font-family: Arial, sans-serif;
+    }
+
+    .about-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #fff; /* Белый фон для контейнера */
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-container h1 {
+        font-size: 2.5em;
+        color: #d5006d; /* Темно-розовый цвет */
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .about-container h2 {
+        font-size: 1.8em;
+        color: #d5006d; /* Темно-розовый цвет */
+        margin-top: 20px;
+    }
+
+    .about-container p {
+        font-size: 1.2em;
+        line-height: 1.6;
+        color: #666;
+        text-align: justify;
+    }
+
+    .about-container ul {
+        list-style-type: disc;
+        margin-left: 20px;
+        padding-left: 20px;
+    }
+
+    .about-container li {
+        font-size: 1.2em;
+        color: #666;
+    }
+
+    .back-home {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #d5006d; /* Темно-розовый цвет */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 1.2em;
+        transition: background-color 0.3s;
+    }
+
+    .back-home:hover {
+        background-color: #b0004d; /* Более темный розовый при наведении */
+    }
+</style>
+
+<div class="about-container">
+    <h1>О нас</h1>
+    <p>Добро пожаловать в наш магазин косметики! Мы предлагаем широкий выбор косметических продуктов для всех.</p>
+    <p>Наша цель - предоставить вам лучшие товары и отличный сервис.</p>
+    <h2>Наша философия</h2>
+    <p>Мы верим, что каждая женщина заслуживает лучшего. Наша команда тщательно отбирает продукты, чтобы гарантировать их качество и эффективность.</p>
+    <h2>Наши ценности</h2>
+    <ul>
+        <li>Качество</li>
+        <li>Доступность</li>
+        <li>Уважение к клиентам</li>
+        <li>Инновации</li>
+    </ul>
+    
+    <a href="{% url 'cosmetic:home' %}" class="back-home">
+        <i class="fas fa-arrow-left"></i> На главную
+    </a>
+</div>
+{% endblock %}
+

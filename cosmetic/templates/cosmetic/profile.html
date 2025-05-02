@@ -1,0 +1,99 @@
+{% extends 'cosmetic/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-pink text-white">
+                    <h3 class="mb-0">Личный кабинет</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <img src="{% static 'images/фото.jpg' %}" 
+                                 alt="Фото профиля" 
+                                 class="img-fluid rounded-circle mb-3 profile-image" 
+                                 style="max-width: 150px; height: 150px; object-fit: cover; border: 3px solid #FF69B4; box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);">
+                        </div>
+                        <div class="col-md-8">
+                            <h4>{{ user.get_full_name|default:user.username }}</h4>
+                            <p class="text-muted">{{ user.email }}</p>
+                            
+                            <div class="mt-4">
+                                <h5>Личные данные</h5>
+                                <p><strong>Имя пользователя:</strong> {{ user.username }}</p>
+                                <p><strong>Email:</strong> {{ user.email }}</p>
+                                <p><strong>Дата регистрации:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>
+                            </div>
+
+                            <div class="mt-4">
+                                <h5>История заказов</h5>
+                                {% if orders %}
+                                    <div class="list-group">
+                                    {% for order in orders %}
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1">Заказ #{{ order.id }}</h6>
+                                                <small>{{ order.created_at|date:"d.m.Y" }}</small>
+                                            </div>
+                                            <p class="mb-1">Сумма: {{ order.total_amount }} ₽</p>
+                                            <small>Статус: {{ order.get_status_display }}</small>
+                                        </a>
+                                    {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <p class="text-muted">У вас пока нет заказов</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.bg-pink {
+    background-color: #FF69B4;
+}
+.card {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    overflow: hidden;
+}
+.list-group-item:hover {
+    background-color: #fff5f8;
+}
+.profile-image {
+    transition: transform 0.3s ease;
+}
+.profile-image:hover {
+    transform: scale(1.05);
+}
+.card-header {
+    border-bottom: none;
+}
+.card-body {
+    padding: 2rem;
+}
+h4, h5 {
+    color: #FF69B4;
+}
+.text-muted {
+    color: #6c757d !important;
+}
+.list-group-item {
+    border-radius: 10px !important;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+.list-group-item:hover {
+    transform: translateX(5px);
+    background-color: #fff5f8;
+    border-color: #FF69B4;
+}
+</style>
+{% endblock %}
