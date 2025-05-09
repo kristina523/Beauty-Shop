@@ -1,0 +1,162 @@
+{% extends 'cosmetic/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Заголовок с кнопкой возврата -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0 text-pink">{{ title }}</h2>
+                <a href="{% url 'cosmetic:product_list' %}" class="btn btn-outline-pink">
+                    <i class="fas fa-arrow-left me-2"></i>К списку товаров
+                </a>
+            </div>
+            
+            <!-- Форма -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Вывод ошибок формы -->
+                        {% if form.errors %}
+                        <div class="alert alert-danger mb-4">
+                            <strong>Ошибка!</strong> Пожалуйста, исправьте следующие ошибки:
+                            <ul class="mt-2 mb-0">
+                                {% for field, errors in form.errors.items %}
+                                    {% for error in errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                        
+                        <!-- Поля формы -->
+                        <div class="row g-3">
+                            {% for field in form %}
+                            <div class="col-md-{% if field.name == 'description' %}12{% else %}6{% endif %}">
+                                <div class="mb-3">
+                                    <label for="{{ field.id_for_label }}" class="form-label">
+                                        {{ field.label }}
+                                        {% if field.field.required %}<span class="text-danger">*</span>{% endif %}
+                                    </label>
+                                    
+                                    {% if field.name == 'image_url' and form.instance.image_url %}
+                                    <div class="mb-2">
+                                        <img src="{{ form.instance.image_url }}" alt="Текущее изображение" class="img-thumbnail" style="max-height: 150px;">
+                                    </div>
+                                    {% endif %}
+                                    
+                                    {{ field }}
+                                    
+                                    {% if field.help_text %}
+                                    <small class="text-muted">{{ field.help_text }}</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <!-- Кнопки формы -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'cosmetic:product_list' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-times me-2"></i>Отмена
+                            </a>
+                            <button type="submit" class="btn btn-gradient-pink">
+                                <i class="fas fa-save me-2"></i>Сохранить
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+:root {
+    --pink: #FF69B4;
+    --pink-light: #FFB6C1;
+    --pink-dark: #DB4D8E;
+    --pink-gradient: linear-gradient(135deg, #FF69B4 0%, #FF8E9E 100%);
+}
+
+/* Текстовые цвета */
+.text-pink {
+    color: var(--pink);
+}
+
+/* Карточка формы */
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Поля формы */
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--pink-light);
+    box-shadow: 0 0 0 0.25rem rgba(255, 105, 180, 0.25);
+}
+
+textarea.form-control {
+    min-height: 120px;
+}
+
+/* Кнопки */
+.btn-gradient-pink {
+    background: var(--pink-gradient);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 25px;
+    transition: all 0.3s;
+}
+
+.btn-gradient-pink:hover {
+    background: linear-gradient(135deg, var(--pink-dark) 0%, #FF7A8A 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+}
+
+.btn-outline-pink {
+    color: var(--pink);
+    border-color: var(--pink);
+    border-radius: 8px;
+    padding: 10px 25px;
+    transition: all 0.3s;
+}
+
+.btn-outline-pink:hover {
+    background-color: var(--pink);
+    color: white;
+}
+
+/* Чекбоксы и радиокнопки */
+.form-check-input:checked {
+    background-color: var(--pink);
+    border-color: var(--pink);
+}
+
+/* Адаптивность */
+@media (max-width: 767px) {
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}

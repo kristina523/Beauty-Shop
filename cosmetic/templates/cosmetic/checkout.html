@@ -1,0 +1,22 @@
+{% extends 'cosmetic/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h1>Оформление заказа</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="address" class="form-label">Адрес доставки</label>
+            <textarea name="address" id="address" class="form-control" required></textarea>
+        </div>
+        <h4>Ваш заказ:</h4>
+        <ul>
+            {% for item in cart_items %}
+                <li>{{ item.product.name }} — {{ item.quantity }} шт. × {{ item.product.price }} ₽ = {{ item.get_cost }} ₽</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Итого: {{ total_price }} ₽</strong></p>
+        <button type="submit" class="btn btn-pink">Подтвердить заказ</button>
+        <a href="{% url 'cosmetic:cart' %}" class="btn btn-outline-secondary">Назад в корзину</a>
+    </form>
+</div>
+{% endblock %}

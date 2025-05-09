@@ -1,0 +1,8 @@
+{% extends 'cosmetic/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h1>Спасибо за заказ!</h1>
+    <p>Ваш заказ №{{ order_id }} успешно оформлен.</p>
+    <a href="{% url 'cosmetic:product_list' %}" class="btn btn-pink">Продолжить покупки</a>
+</div>
+{% endblock %}

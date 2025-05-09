@@ -1,0 +1,3 @@
+.form-control.is-invalid, .form-select.is-invalid {
+    border-color: #dc3545;
+}

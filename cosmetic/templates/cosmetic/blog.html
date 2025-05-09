@@ -1,5 +1,6 @@
 {% extends 'cosmetic/base.html' %}
-{% load static %}  
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
 
 {% block title %}Блог - Cosmetic Shop{% endblock %}
 
@@ -61,7 +62,6 @@
     </div>
     
     <style>
-        /* Основные стили */
         .blog-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -111,7 +111,6 @@
             margin-right: 8px;
         }
         
-        /* Стили карточек статей */
         .blog-posts {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));

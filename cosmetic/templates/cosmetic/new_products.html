@@ -1,0 +1,346 @@
+{% extends 'cosmetic/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Заголовок с декоративными элементами -->
+    <div class="text-center position-relative mb-5">
+        <h1 class="display-5 fw-bold text-pink mb-3">{{ title }}</h1>
+        <div class="d-flex justify-content-center">
+            <div class="title-divider"></div>
+        </div>
+        <div class="position-absolute top-0 end-0">
+            <a href="{% url 'cosmetic:product_add' %}" class="btn btn-gradient-pink rounded-pill px-4 py-2 shadow-sm">
+                <i class="fas fa-plus me-2"></i>Добавить новинку
+            </a>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <a href="{% url 'cosmetic:home' %}" class="btn btn-outline-pink rounded-pill">
+                    <i class="fas fa-arrow-left me-2"></i>На главную
+                </a>
+        </div>
+    </div>
+
+    <!-- Сетка товаров -->
+    <div class="row g-4">
+        {% for product in new_products %}
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="card product-card h-100 border-0 overflow-hidden">
+                <!-- Бейджи и метки -->
+                <div class="product-badges">
+                    {% if product.is_best_seller %}
+                    <span class="badge bg-danger">NEW</span>
+                    {% endif %}
+                    {% if product.discounted_price %}
+                    <span class="badge bg-success">-{{ product.discount|floatformat:"0" }}%</span>
+                    {% endif %}
+                </div>
+                
+                <!-- Изображение товара -->
+                <div class="product-image-wrapper">
+                    {% if product.image_url %}
+                        <img src="{{ product.image_url }}" class="product-img" alt="{{ product.name }}">
+                    {% else %}
+                        <img src="{% static 'images/no-image.png' %}" class="product-img" alt="Нет фото">
+                    {% endif %}
+                    <div class="image-overlay"></div>
+                </div>
+                
+                <!-- Тело карточки -->
+                <div class="card-body d-flex flex-column pt-4 pb-3 px-4">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="product-title mb-0">{{ product.name }}</h5>
+                        <div class="product-actions">
+                            <a href="{% url 'cosmetic:product_edit' product.product_id %}" class="btn-action btn-edit">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <a href="{% url 'cosmetic:product_delete' product.product_id %}" class="btn-action btn-delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <p class="product-description text-muted mb-3">{{ product.description|truncatechars:80 }}</p>
+                    
+                    <!-- Рейтинг -->
+                    <div class="product-rating mb-3">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <small class="text-muted ms-2">({{ product.reviews_count|default:"0" }})</small>
+                    </div>
+                    
+                    <!-- Цена и кнопка -->
+                    <div class="mt-auto d-flex justify-content-between align-items-center">
+                        <div class="product-price">
+                            {% if product.discounted_price %}
+                                <span class="current-price">{{ product.discounted_price }} ₽</span>
+                                <span class="old-price">{{ product.price }} ₽</span>
+                            {% else %}
+                                <span class="current-price">{{ product.price }} ₽</span>
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'cosmetic:product_detail' product.product_id %}" class="btn btn-pink-circle">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Футер карточки -->
+                <div class="card-footer bg-transparent border-0 pt-0 pb-3 px-4">
+                    <a href="{% url 'cosmetic:add_to_cart' product.product_id %}" class="btn btn-pink w-100 py-2">
+                        <i class="fas fa-shopping-cart me-2"></i>В корзину
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <img src="{% static 'images/empty-products.svg' %}" alt="Нет товаров" class="img-fluid mb-4" style="max-height: 200px;">
+            <h4 class="text-muted mb-3">Новинок пока нет</h4>
+            <a href="{% url 'cosmetic:product_add' %}" class="btn btn-gradient-pink rounded-pill px-4">
+                <i class="fas fa-plus me-2"></i>Добавить первый товар
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+:root {
+    --pink: #FF69B4;
+    --pink-light: #FFB6C1;
+    --pink-dark: #DB4D8E;
+    --pink-gradient: linear-gradient(135deg, #FF69B4 0%, #FF8E9E 100%);
+}
+
+/* Общие стили */
+.text-pink { color: var(--pink); }
+.bg-pink { background-color: var(--pink); }
+
+/* Заголовок */
+.title-divider {
+    width: 80px;
+    height: 3px;
+    background: var(--pink-gradient);
+    border-radius: 3px;
+}
+
+/* Карточка товара */
+.product-card {
+    border-radius: 16px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: white;
+    box-shadow: 0 4px 24px rgba(255, 105, 180, 0.08);
+}
+.product-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(255, 105, 180, 0.18);
+}
+
+/* Бейджи */
+.product-badges {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.product-badges .badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Изображение */
+.product-image-wrapper {
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+    background: #fef6f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.product-img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    transition: transform 0.6s ease;
+}
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 70%, rgba(255,255,255,0.9) 100%);
+}
+.product-card:hover .product-img {
+    transform: scale(1.08);
+}
+
+/* Текст */
+.product-title {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    flex: 1;
+}
+.product-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #666;
+}
+
+/* Рейтинг */
+.product-rating {
+    display: flex;
+    align-items: center;
+}
+.stars {
+    color: #FFC107;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
+
+/* Цена */
+.product-price {
+    line-height: 1.2;
+}
+.current-price {
+    color: var(--pink);
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+.old-price {
+    color: #999;
+    text-decoration: line-through;
+    font-size: 0.9rem;
+    margin-left: 5px;
+}
+
+/* Кнопки */
+.btn-gradient-pink {
+    background: var(--pink-gradient);
+    color: white;
+    border: none;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+.btn-gradient-pink:hover {
+    background: linear-gradient(135deg, var(--pink-dark) 0%, #FF7A8A 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+}
+.btn-pink {
+    background-color: var(--pink);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+.btn-pink:hover {
+    background-color: var(--pink-dark);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.2);
+}
+.btn-pink-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--pink);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+.btn-pink-circle:hover {
+    background-color: var(--pink-dark);
+    transform: scale(1.1);
+}
+
+/* Кнопки действий */
+.product-actions {
+    display: flex;
+    gap: 5px;
+}
+.btn-action {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+    opacity: 0;
+    transform: translateY(5px);
+}
+.btn-edit {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #FFC107;
+}
+.btn-delete {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #DC3545;
+}
+.product-card:hover .btn-action {
+    opacity: 1;
+    transform: translateY(0);
+}
+.btn-action:hover {
+    color: white;
+}
+.btn-edit:hover {
+    background-color: #FFC107;
+}
+.btn-delete:hover {
+    background-color: #DC3545;
+}
+
+/* Адаптивность */
+@media (max-width: 1199px) {
+    .product-image-wrapper {
+        height: 200px;
+    }
+}
+@media (max-width: 991px) {
+    .product-image-wrapper {
+        height: 180px;
+    }
+    .title-divider {
+        margin-bottom: 20px;
+    }
+    .position-absolute.top-0.end-0 {
+        position: relative !important;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: center;
+    }
+}
+@media (max-width: 767px) {
+    .product-image-wrapper {
+        height: 160px;
+    }
+    .product-title {
+        font-size: 1rem;
+    }
+    .product-description {
+        font-size: 0.85rem;
+    }
+}
+</style>
+{% endblock %}

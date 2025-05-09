@@ -17,9 +17,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cosmetic'
+    'rest_framework',
+    'api_shop',
+    'cosmetic',
 ]
-
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 1,  # Можно поставить любое число
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',  # Только просмотр для всех, изменения — только для авторизованных
+    ],
+    'DATETIME_FORMAT': "%d.%m.%Y %H:%M",  # Например, 06.05.2025 15:30
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -50,18 +59,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
-# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cosmeticdb',  
+        'NAME': 'beauty_shop',
         'USER': 'postgres',
-        'PASSWORD': '1',  
+        'PASSWORD': '1',
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
-
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -93,4 +100,12 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 2,
+    'DATE_FORMAT': "%d.%m.%Y", 
+    'DATETIME_FORMAT': "%d.%m.%Y %H:%M",
+}

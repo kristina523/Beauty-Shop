@@ -1,0 +1,63 @@
+{% extends 'cosmetic/base.html' %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="card shadow-pink border-0">
+                <div class="card-body p-5">
+                    <h2 class="mb-4 text-center text-pink">Оставить отзыв для "{{ product.name }}"</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Ваша оценка:</label>
+                            <div class="star-rating-wrapper">
+                                {{ form.rating }}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            {{ form.comment.label_tag }}
+                            {{ form.comment }}
+                        </div>
+                        <div class="d-flex justify-content-center mt-4">
+                            <button type="submit" class="btn btn-gradient-pink px-5 py-2">Отправить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+.star-rating-wrapper {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    font-size: 2rem;
+    display: flex;
+    gap: 0.2em;
+}
+.star-rating input[type="radio"] {
+    display: none;
+}
+.star-rating label {
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.star-rating input[type="radio"]:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #FF69B4;
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Для красивого выделения звёзд при наведении
+    const stars = document.querySelectorAll('.star-rating input[type="radio"]');
+    stars.forEach(star => {
+        star.addEventListener('change', function() {
+            // ничего не нужно, просто для совместимости
+        });
+    });
+});
+</script>
+{% endblock %}

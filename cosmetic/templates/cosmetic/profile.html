@@ -12,34 +12,97 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4 text-center">
-                            <img src="{% static 'images/фото.jpg' %}" 
-                                 alt="Фото профиля" 
-                                 class="img-fluid rounded-circle mb-3 profile-image" 
-                                 style="max-width: 150px; height: 150px; object-fit: cover; border: 3px solid #FF69B4; box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);">
+                            {% if user.profile_image %}
+                                <img src="{{ user.profile_image.url }}" 
+                                     alt="Фото профиля" 
+                                     class="img-fluid rounded-circle mb-3 profile-image" 
+                                     style="max-width: 150px; height: 150px; object-fit: cover; border: 3px solid #FF69B4; box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);">
+                            {% else %}
+                                <img src="{% static 'images/фото.jpg' %}" 
+                                     alt="Фото профиля" 
+                                     class="img-fluid rounded-circle mb-3 profile-image" 
+                                     style="max-width: 150px; height: 150px; object-fit: cover; border: 3px solid #FF69B4; box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);">
+                            {% endif %}
+                            <form method="post" enctype="multipart/form-data" class="mt-3">
+                                {% csrf_token %}
+                                {{ form.profile_image }}
+                                <button type="submit" class="btn btn-outline-pink btn-sm mt-2">Изменить фото</button>
+                            </form>
+                        </div>
                         </div>
                         <div class="col-md-8">
                             <h4>{{ user.get_full_name|default:user.username }}</h4>
                             <p class="text-muted">{{ user.email }}</p>
                             
-                            <div class="mt-4">
-                                <h5>Личные данные</h5>
-                                <p><strong>Имя пользователя:</strong> {{ user.username }}</p>
-                                <p><strong>Email:</strong> {{ user.email }}</p>
-                                <p><strong>Дата регистрации:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>
+                            <!-- Бонусная система -->
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-pink">Накопительные бонусы</h5>
+                                            <div class="d-flex align-items-center">
+                                                <div class="bonus-circle mr-3">
+                                                    <span class="bonus-amount">750</span>
+                                                    <span class="bonus-text">бонусов</span>
+                                                </div>
+                                                <div>
+                                                    <p class="mb-1">До следующего уровня: 250 бонусов</p>
+                                                    <div class="progress" style="height: 10px;">
+                                                        <div class="progress-bar bg-pink" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <small class="text-muted">1 бонус = 1 рубль при оплате</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-
+                            
+                            <!-- Персональные скидки -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-pink">Персональные скидки</h5>
+                                            <div class="discount-badge">
+                                                <span class="discount-value">5%</span>
+                                                <span class="discount-text">постоянная скидка</span>
+                                            </div>
+                                            <p class="mt-2 small">Действует на все товары</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Программа приведи друга -->
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-pink">Приведи друга</h5>
+                                            <div class="friend-program">
+                                                <div class="friend-icon">
+                                                    <i class="fas fa-user-friends"></i>
+                                                </div>
+                                                <p class="mb-1">Получите 500 бонусов за каждого друга</p>
+                                                <button class="btn btn-pink btn-sm mt-2">Поделиться ссылкой</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- История заказов -->
                             <div class="mt-4">
-                                <h5>История заказов</h5>
+                                <h5 class="text-pink">История заказов</h5>
                                 {% if orders %}
                                     <div class="list-group">
                                     {% for order in orders %}
                                         <a href="#" class="list-group-item list-group-item-action">
                                             <div class="d-flex w-100 justify-content-between">
-                                                <h6 class="mb-1">Заказ #{{ order.id }}</h6>
-                                                <small>{{ order.created_at|date:"d.m.Y" }}</small>
+                                                <h6 class="mb-1">Заказ #{{ order.order_id }}</h6>
+                                                <small>{{ order.order_date|date:"d.m.Y" }}</small>
                                             </div>
                                             <p class="mb-1">Сумма: {{ order.total_amount }} ₽</p>
-                                            <small>Статус: {{ order.get_status_display }}</small>
+                                            <small>Статус: {{ order.status }}</small>
                                         </a>
                                     {% endfor %}
                                     </div>
@@ -59,10 +122,31 @@
 .bg-pink {
     background-color: #FF69B4;
 }
+.text-pink {
+    color: #FF69B4;
+}
+.btn-outline-pink {
+    color: #FF69B4;
+    border-color: #FF69B4;
+}
+.btn-outline-pink:hover {
+    background-color: #FF69B4;
+    color: white;
+}
+.btn-pink {
+    background-color: #FF69B4;
+    color: white;
+    border: none;
+}
+.btn-pink:hover {
+    background-color: #e055a1;
+    color: white;
+}
 .card {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     border-radius: 15px;
     overflow: hidden;
+    border: none;
 }
 .list-group-item:hover {
     background-color: #fff5f8;
@@ -79,9 +163,6 @@
 .card-body {
     padding: 2rem;
 }
-h4, h5 {
-    color: #FF69B4;
-}
 .text-muted {
     color: #6c757d !important;
 }
@@ -89,11 +170,80 @@ h4, h5 {
     border-radius: 10px !important;
     margin-bottom: 5px;
     transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,.125);
 }
 .list-group-item:hover {
     transform: translateX(5px);
     background-color: #fff5f8;
     border-color: #FF69B4;
+}
+
+/* Стили для бонусной системы */
+.bonus-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF69B4 0%, #FF8E9E 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
+}
+.bonus-amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1;
+}
+.bonus-text {
+    font-size: 0.7rem;
+    margin-top: 2px;
+}
+
+/* Стили для скидок */
+.discount-badge {
+    background-color: #fff5f8;
+    border: 2px dashed #FF69B4;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    width: 100px;
+}
+.discount-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #FF69B4;
+    display: block;
+    line-height: 1;
+}
+.discount-text {
+    font-size: 0.7rem;
+    color: #6c757d;
+}
+
+/* Стили для программы "Приведи друга" */
+.friend-program {
+    text-align: center;
+}
+.friend-icon {
+    font-size: 2rem;
+    color: #FF69B4;
+    margin-bottom: 10px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .col-md-4 {
+        margin-bottom: 20px;
+    }
+    .bonus-circle {
+        width: 60px;
+        height: 60px;
+    }
+    .bonus-amount {
+        font-size: 1.2rem;
+    }
 }
 </style>
 {% endblock %}

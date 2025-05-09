@@ -1,0 +1,44 @@
+.btn-pink {
+    background-color: #FF69B4;
+    color: white;
+    border: none;
+    transition: background 0.2s;
+}
+.btn-pink:hover {
+    background-color: #FF1493;
+    color: white;
+}
+.btn-outline-pink {
+    color: #FF69B4;
+    border-color: #FF69B4;
+    background: transparent;
+    transition: background 0.2s, color 0.2s;
+}
+.btn-outline-pink:hover {
+    background-color: #FF69B4;
+    color: white;
+}
+.text-pink {
+    color: #FF69B4;
+}
+.table th, .table td {
+    vertical-align: middle;
+}
+input[type="number"].form-control {
+    padding: 2px 8px;
+    font-size: 1rem;
+}
+.alert-info {
+    background: #fff5f8;
+    color: #FF69B4;
+    border: 1px solid #ffe0ef;
+}
+@media (max-width: 767px) {
+    .table-responsive {
+        font-size: 0.95rem;
+    }
+    .btn, .btn-pink, .btn-outline-pink {
+        font-size: 0.95rem;
+        padding: 6px 10px;
+    }
+}

@@ -1,0 +1,134 @@
+:root {
+    --pink-light: #FFE4E1;
+    --pink-main: #FF69B4;
+    --pink-dark: #DB7093;
+}
+
+.text-pink {
+color: var(--pink-main);
+}
+
+.btn-pink {
+background-color: var(--pink-main);
+color: white;
+border: none;
+transition: all 0.3s ease;
+}
+
+.btn-pink:hover {
+background-color: var(--pink-dark);
+color: white;
+transform: translateY(-2px);
+}
+
+.btn-pink-dark {
+background-color: var(--pink-dark);
+color: white;
+border: none;
+transition: all 0.3s ease;
+}
+
+.btn-pink-dark:hover {
+background-color: var(--pink-main);
+color: white;
+transform: translateY(-2px);
+}
+
+.btn-outline-pink {
+color: var(--pink-main);
+border-color: var(--pink-main);
+transition: all 0.3s ease;
+}
+
+.btn-outline-pink:hover {
+background-color: var(--pink-main);
+color: white;
+transform: translateY(-2px);
+}
+
+.navbar {
+box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+background-color: white !important;
+}
+
+.navbar-brand {
+font-weight: 600;
+font-size: 1.5rem;
+}
+
+.nav-link {
+color: var(--pink-dark) !important;
+font-weight: 500;
+transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+color: var(--pink-main) !important;
+transform: translateY(-2px);
+}
+
+.cart-icon {
+position: relative;
+}
+
+.cart-count {
+position: absolute;
+top: -8px;
+right: -8px;
+background-color: var(--pink-main);
+color: white;
+border-radius: 50%;
+padding: 2px 6px;
+font-size: 0.7rem;
+box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+footer {
+background-color: #f8f9fa;
+border-top: 1px solid var(--pink-light);
+}
+
+footer h5 {
+color: var(--pink-main);
+font-weight: 600;
+}
+
+footer a {
+color: var(--pink-dark);
+transition: all 0.3s ease;
+}
+
+footer a:hover {
+color: var(--pink-main);
+text-decoration: none;
+transform: translateX(5px);
+}
+
+.alert {
+border-radius: 15px;
+box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(-10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.alert {
+animation: fadeIn 0.5s ease-out;
+}
+
+/* Медиа-запросы */
+@media (max-width: 768px) {
+.navbar-brand {
+    font-size: 1.2rem;
+}
+
+footer {
+    text-align: center;
+}
+
+footer .col-md-4 {
+    margin-bottom: 30px;
+}
+}

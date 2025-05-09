@@ -1,0 +1,52 @@
+.bg-pink {
+    background-color: #FF69B4;
+}
+.text-pink {
+    color: #FF69B4;
+}
+.card {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    overflow: hidden;
+}
+.list-group-item:hover {
+    background-color: #fff5f8;
+}
+.profile-image {
+    transition: transform 0.3s ease;
+}
+.profile-image:hover {
+    transform: scale(1.05);
+}
+.card-header {
+    border-bottom: none;
+}
+.card-body {
+    padding: 2rem;
+}
+h4, h5 {
+    color: #FF69B4;
+}
+.text-muted {
+    color: #6c757d !important;
+}
+.list-group-item {
+    border-radius: 10px !important;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+.list-group-item:hover {
+    transform: translateX(5px);
+    background-color: #fff5f8;
+    border-color: #FF69B4;
+}
+.bonus-block {
+    background: #fff5f8;
+    border-radius: 12px;
+    border: 1px solid #ffe0ef;
+    min-height: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,73 +1,99 @@
 {% extends 'cosmetic/base.html' %}
 {% load static %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 
 {% block content %}
 
-<section class="hero-section">
-    <div class="container-fluid px-0">
-        <div class="position-relative">
-            <img src="{% static 'images/hero-image.jpg' %}" 
-                 alt="Beauty Shop Hero" 
-                 class="w-100 hero-image"
-                 style="max-height: 600px; object-fit: cover;"
-                 onerror="this.style.backgroundColor='var(--pink-light)';">
-            <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
-                <h1 class="display-4 fw-bold mb-4">Добро пожаловать в Beauty Shop</h1>
-                <p class="lead mb-4">Откройте для себя мир красоты и ухода за собой</p>
-                <a href="{% url 'cosmetic:product_list' %}" class="btn btn-pink btn-lg">
-                    Перейти в каталог
-                </a>
-            </div>
+<div class="main-slider mb-5">
+    <div id="promoCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#promoCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#promoCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#promoCarousel" data-bs-slide-to="2"></button>
         </div>
-    </div>
-</section>
-
-<section class="features-section py-5">
-    <div class="container">
-        <h2 class="text-center text-pink mb-5">Наши преимущества</h2>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="feature-card text-center p-4">
-                    <i class="fas fa-truck fa-3x text-pink mb-3"></i>
-                    <h3>Бесплатная доставка</h3>
-                    <p>При заказе от 3000 рублей</p>
+        <div class="carousel-inner rounded-3 overflow-hidden">
+            <div class="carousel-item active">
+                <img src="{% static 'images/hero-image.jpg' %}" class="d-block w-100" alt="Акция 1">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2 class="display-4 fw-bold">Сезонная распродажа</h2>
+                    <p class="fs-4">Скидки до 50% на топовые бренды</p>
+                    <a href="{% url 'cosmetic:promotions' %}" class="btn btn-pink btn-lg mt-3">Смотреть акции</a>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="feature-card text-center p-4">
-                    <i class="fas fa-certificate fa-3x text-pink mb-3"></i>
-                    <h3>Оригинальная продукция</h3>
-                    <p>Гарантия подлинности</p>
+            <div class="carousel-item">
+                <img src="{% static 'images/акция2.jpg' %}" class="d-block w-100" alt="Акция 2">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2 class="display-4 fw-bold">Новая коллекция</h2>
+                    <p class="fs-4">Эксклюзивные продукты уже в продаже</p>
+                    <a href="{% url 'cosmetic:new_products' %}" class="btn btn-pink btn-lg mt-3">Смотреть новинки</a>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="feature-card text-center p-4">
-                    <i class="fas fa-headset fa-3x text-pink mb-3"></i>
-                    <h3>Консультации</h3>
-                    <p>Профессиональная помощь в выборе</p>
+            <div class="carousel-item">
+                <img src="{% static 'images/акция3.jpg' %}" class="d-block w-100" alt="Акция 3">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2 class="display-4 fw-bold">Бесплатная доставка</h2>
+                    <p class="fs-4">При заказе от 3000 рублей</p>
+                    <a href="{% url 'cosmetic:delivery' %}" class="btn btn-pink btn-lg mt-3">Подробнее</a>
                 </div>
             </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#promoCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#promoCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-</section>
+</div>
 
-<section class="new-products-section py-5 bg-light">
+<section class="top-products py-5 bg-light">
     <div class="container">
-        <h2 class="text-center text-pink mb-5">Новые поступления</h2>
-        <div class="row">
-            {% for product in new_products %}
-            <div class="col-md-3 mb-4">
-                <div class="card product-card h-100">
-                    {% if product.image %}
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                    {% else %}
-                    <img src="{% static 'images/no-image.png' %}" class="card-img-top" alt="No image">
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title text-pink">{{ product.name }}</h5>
-                        <p class="card-text">{{ product.description|truncatewords:10 }}</p>
-                        <p class="card-text"><strong>{{ product.price }} ₽</strong></p>
-                        <a href="{% url 'cosmetic:product_detail' product.id %}" class="btn btn-pink">Подробнее</a>
+        <div class="section-header d-flex justify-content-between align-items-center mb-5">
+            <h2 class="section-title"><i class="fas fa-crown me-2"></i>Хиты продаж</h2>
+            <a href="{% url 'cosmetic:best_sellers' %}" class="btn btn-outline-pink">Все хиты <i class="fas fa-arrow-right ms-2"></i></a>
+        </div>
+        
+        <div class="row g-4">
+            {% for product in best_sellers %}
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="product-card h-100">
+                    <div class="product-badges">
+                        {% if product.is_new %}
+                        <span class="badge bg-success">Новинка</span>
+                        {% endif %}
+                        {% if product.discount %}
+                        <span class="badge bg-danger">-{{ product.discount }}%</span>
+                        {% endif %}
+                    </div>
+                    <div class="product-thumb">
+                        <a href="{% url 'cosmetic:product_detail' product.id %}">
+                            <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+                        </a>
+                    </div>
+                    <div class="product-details">
+                        <h4 class="product-title">
+                            <a href="{% url 'cosmetic:product_detail' product.id %}">{{ product.name }}</a>
+                        </h4>
+                        <div class="product-price">
+                            {% if product.discount %}
+                            <span class="price">{{ product.discounted_price }} ₽</span>
+                            <span class="price-old">{{ product.price }} ₽</span>
+                            {% else %}
+                            <span class="price">{{ product.price }} ₽</span>
+                            {% endif %}
+                        </div>
+                        <div class="product-bottom">
+                            <button class="btn btn-pink btn-sm add-to-cart" data-product-id="{{ product.id }}">
+                                <i class="fas fa-shopping-cart me-2"></i>В корзину
+                            </button>
+                            <div class="product-links">
+                                <a href="#" class="btn btn-outline-secondary btn-sm wishlist" data-product-id="{{ product.id }}">
+                                    <i class="far fa-heart"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -76,75 +102,358 @@
     </div>
 </section>
 
+<section class="new-products py-5">
+    <div class="container">
+        <div class="section-header d-flex justify-content-between align-items-center mb-5">
+            <h2 class="section-title"><i class="fas fa-star me-2"></i>Новые поступления</h2>
+            <a href="{% url 'cosmetic:new_products' %}" class="btn btn-outline-pink">Все новинки <i class="fas fa-arrow-right ms-2"></i></a>
+        </div>
+        
+        <div class="row g-4">
+            {% for product in new_products %}
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="product-card h-100">
+                    <div class="product-badges">
+                        <span class="badge bg-info">Новинка</span>
+                    </div>
+                    <div class="product-thumb">
+                        <a href="{% url 'cosmetic:product_detail' product.id %}">
+                            <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+                        </a>
+                    </div>
+                    <div class="product-details">
+                        <h4 class="product-title">
+                            <a href="{% url 'cosmetic:product_detail' product.id %}">{{ product.name }}</a>
+                        </h4>
+                        <div class="product-price">
+                            <span class="price">{{ product.price }} ₽</span>
+                        </div>
+                        <div class="product-bottom">
+                            <button class="btn btn-pink btn-sm add-to-cart" data-product-id="{{ product.id }}">
+                                <i class="fas fa-shopping-cart me-2"></i>В корзину
+                            </button>
+                            <div class="product-links">
+                                <a href="#" class="btn btn-outline-secondary btn-sm wishlist" data-product-id="{{ product.id }}">
+                                    <i class="far fa-heart"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="reviews-section py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center mb-5"><i class="fas fa-comment-alt me-2"></i>Отзывы наших клиентов</h2>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="review-card h-100">
+                    <div class="review-header">
+                        <div class="review-author">
+                            <img src="{% static 'images/человек1.jpg' %}" class="review-avatar" alt="Мария">
+                            <div class="author-info">
+                                <h5>Мария К.</h5>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-body">
+                        <p>Заказывала палетку теней, пришла быстро, упаковка целая. Цвета просто потрясающие, очень пигментированные. Буду заказывать еще!</p>
+                    </div>
+                    <div class="review-footer">
+                        <small class="text-muted">15 января 2023</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="review-card h-100">
+                    <div class="review-header">
+                        <div class="review-author">
+                            <img src="{% static 'images/человек2.jpg' %}" class="review-avatar" alt="Анна">
+                            <div class="author-info">
+                                <h5>Анна С.</h5>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-body">
+                        <p>Отличный сервис! Консультант помог подобрать тон основы под мой тип кожи. Доставка заняла всего 2 дня. Рекомендую!</p>
+                    </div>
+                    <div class="review-footer">
+                        <small class="text-muted">3 февраля 2023</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="review-card h-100">
+                    <div class="review-header">
+                        <div class="review-author">
+                            <img src="{% static 'images/человек3.jpg' %}" class="review-avatar" alt="Елена">
+                            <div class="author-info">
+                                <h5>Елена П.</h5>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-body">
+                        <p>Пользуюсь этим магазином уже больше года. Всегда свежая косметика, оригинальная продукция. Ни разу не было проблем с заказами.</p>
+                    </div>
+                    <div class="review-footer">
+                        <small class="text-muted">28 декабря 2022</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="{% url 'cosmetic:reviews' %}" class="btn btn-pink">Все отзывы</a>
+        </div>
+    </div>
+</section>
+
+<section class="instagram-section py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5"><i class="fab fa-instagram me-2"></i>Мы в Instagram</h2>
+        <p class="text-center mb-5">Подписывайтесь на наш аккаунт <a href="https://instagram.com/your_shop" target="_blank" class="instagram-link">@your_shop</a> чтобы быть в курсе новинок и акций</p>
+        
+        <div class="row g-3">
+            <div class="col-md-2 col-4">
+                <a href="#" class="instagram-post">
+                   
+                    <div class="instagram-overlay">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Стили для главной страницы -->
 <style>
-
-.hero-section {
-    margin-bottom: 3rem;
-}
-
-.hero-image {
-    filter: brightness(0.7);
-    transition: all 0.3s ease;
-}
-
-.hero-section .btn-pink {
-    padding: 0.8rem 2rem;
-    font-size: 1.1rem;
-    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
-}
-
-.hero-section h1 {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.hero-section p {
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-
-.feature-card {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-10px);
-}
-
-
-.product-card {
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-}
-
-.product-card .card-img-top {
-    height: 200px;
-    object-fit: cover;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-}
-
-@media (max-width: 768px) {
-    .hero-section h1 {
+    /* Стили для слайдера */
+    .main-slider .carousel-item {
+        height: 500px;
+    }
+    
+    .main-slider .carousel-item img {
+        object-fit: cover;
+        height: 100%;
+    }
+    
+    .main-slider .carousel-caption {
+        bottom: 100px;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 25px;
+        border-radius: 10px;
+    }
+    
+    .main-slider .carousel-control-prev,
+    .main-slider .carousel-control-next {
+        width: 5%;
+    }
+    
+    /* Стили для карточек товаров */
+    .product-card {
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        border: 1px solid #eee;
+    }
+    
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .product-badges {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        z-index: 2;
+    }
+    
+    .product-badges .badge {
+        margin-right: 5px;
+        font-size: 0.8rem;
+    }
+    
+    .product-thumb {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .product-thumb img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+    
+    .product-card:hover .product-thumb img {
+        transform: scale(1.05);
+    }
+    
+    .product-details {
+        padding: 15px;
+    }
+    
+    .product-title {
+        font-size: 1rem;
+        margin-bottom: 10px;
+        height: 40px;
+        overflow: hidden;
+    }
+    
+    .product-price {
+        margin-bottom: 15px;
+    }
+    
+    .price {
+        font-weight: 600;
+        color: #ff69b4;
+        font-size: 1.1rem;
+    }
+    
+    .price-old {
+        text-decoration: line-through;
+        color: #999;
+        font-size: 0.9rem;
+        margin-left: 8px;
+    }
+    
+    .product-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* Стили для отзывов */
+    .review-card {
+        background: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .review-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 15px;
+    }
+    
+    .review-author {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    .author-info h5 {
+        margin-bottom: 5px;
+    }
+    
+    .rating {
+        color: #ffc107;
+    }
+    
+    .review-body {
+        margin-bottom: 15px;
+    }
+    
+    /* Стили для инстаграм */
+    .instagram-post {
+        position: relative;
+        display: block;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .instagram-post img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+    
+    .instagram-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 105, 180, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    
+    .instagram-post:hover .instagram-overlay {
+        opacity: 1;
+    }
+    
+    .instagram-overlay i {
+        color: white;
         font-size: 2rem;
     }
     
-    .hero-section p {
-        font-size: 1rem;
+    .instagram-link {
+        color: #ff69b4;
+        font-weight: 600;
     }
     
-    .hero-section .btn-pink {
-        padding: 0.6rem 1.5rem;
-        font-size: 1rem;
+    /* Адаптивные стили */
+    @media (max-width: 768px) {
+        .main-slider .carousel-item {
+            height: 350px;
+        }
+        
+        .main-slider .carousel-caption {
+            bottom: 30px;
+            padding: 15px;
+        }
+        
+        .main-slider .carousel-caption h2 {
+            font-size: 1.5rem;
+        }
+        
+        .main-slider .carousel-caption p {
+            font-size: 1rem;
+        }
+        
+        .product-thumb img {
+            height: 180px;
+        }
     }
-}
 </style>
+
 {% endblock %}

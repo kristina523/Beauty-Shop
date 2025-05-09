@@ -1,0 +1,194 @@
+{% extends 'cosmetic/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="reviews-section py-5">
+    <div class="container">
+        <!-- Заголовок с декоративным элементом -->
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold text-pink mb-3">Отзывы наших клиентов</h1>
+            <div class="mx-auto" style="width: 80px; height: 4px; background: linear-gradient(90deg, #FF69B4 0%, #FF8E9E 100%); border-radius: 2px;"></div>
+        </div>
+
+        <!-- Сетка отзывов -->
+        <div class="row g-4">
+            {% for review in reviews %}
+            <div class="col-lg-4 col-md-6">
+                <div class="review-card h-100 p-4">
+                    <!-- Шапка отзыва -->
+                    <div class="review-header d-flex align-items-start mb-3">
+                        <!-- Аватар пользователя -->
+                        <div class="review-avatar me-3">
+                            <div class="avatar-circle bg-pink-light">
+                                {{ review.name|first|upper }}
+                            </div>
+                        </div>
+                        
+                        <!-- Имя и дата -->
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1">{{ review.name }}</h5>
+                            <small class="text-muted">{{ review.created_date|date:"d.m.Y" }}</small>
+                        </div>
+                        
+                        <!-- Рейтинг -->
+                        <div class="rating ms-2">
+                            <div class="stars" style="--rating: {{ review.rating }};">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Тело отзыва -->
+                    <div class="review-body">
+                        <!-- Товар -->
+                        <div class="product-badge mb-2">
+                            <i class="fas fa-tag me-1 text-muted"></i>
+                            <span>{{ review.product.name|truncatechars:30 }}</span>
+                        </div>
+                        
+                        <!-- Текст отзыва -->
+                        <div class="review-text">
+                            <p class="mb-0">{{ review.text|linebreaks }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <img src="{% static 'images/no-reviews.svg' %}" alt="Нет отзывов" class="img-fluid mb-4" style="max-height: 200px;">
+                <h4 class="text-muted mb-3">Отзывов пока нет</h4>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Пагинация -->
+        {% if reviews.has_other_pages %}
+        <div class="d-flex justify-content-center mt-5">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% if reviews.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ reviews.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    
+                    {% for i in reviews.paginator.page_range %}
+                    <li class="page-item {% if reviews.number == i %}active{% endif %}">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                    {% endfor %}
+                    
+                    {% if reviews.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ reviews.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{% url 'cosmetic:home' %}" class="btn btn-outline-pink rounded-pill">
+            <i class="fas fa-arrow-left me-2"></i>На главную
+        </a>
+</div>
+
+<style>
+:root {
+    --pink: #FF69B4;
+    --pink-light: #FFB6C1;
+}
+
+/* Общие стили */
+.text-pink { color: var(--pink); }
+.bg-pink-light { background-color: var(--pink-light); }
+
+/* Секция отзывов */
+.reviews-section {
+    background-color: #fff9fb;
+}
+
+/* Карточка отзыва */
+.review-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(255, 105, 180, 0.08);
+    border: 1px solid rgba(255, 105, 180, 0.1);
+}
+
+/* Аватар пользователя */
+.avatar-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Рейтинг */
+.rating .stars {
+    position: relative;
+    display: inline-block;
+    color: #e0e0e0;
+    font-size: 1.1rem;
+}
+
+.rating .stars::before {
+    content: '★★★★★';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: calc(var(--rating) * 20%);
+    color: #FFC107;
+    overflow: hidden;
+}
+
+/* Текст отзыва */
+.review-text {
+    line-height: 1.7;
+    color: #555;
+    padding: 15px 0;
+}
+
+/* Бейдж товара */
+.product-badge {
+    background-color: #f8f9fa;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* Пагинация */
+.page-item.active .page-link {
+    background-color: var(--pink);
+    border-color: var(--pink);
+}
+
+.page-link {
+    color: var(--pink);
+}
+
+/* Адаптивность */
+@media (max-width: 767px) {
+    .review-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .rating {
+        margin-top: 10px;
+        margin-left: 0 !important;
+    }
+}
+</style>
+{% endblock %}

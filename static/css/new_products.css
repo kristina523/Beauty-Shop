@@ -1,0 +1,30 @@
+.text-pink {
+    color: #FF69B4;
+}
+.btn-pink {
+    background-color: #FF69B4;
+    color: #fff;
+    border: none;
+    transition: background 0.2s;
+}
+.btn-pink:hover {
+    background-color: #e055a1;
+    color: #fff;
+}
+.price {
+    color: #FF69B4;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.shadow-pink {
+    box-shadow: 0 4px 24px 0 rgba(255, 105, 180, 0.10), 0 1.5px 4px 0 rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.product-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 32px 0 rgba(255, 105, 180, 0.18), 0 2px 8px 0 rgba(0,0,0,0.08);
+}
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}

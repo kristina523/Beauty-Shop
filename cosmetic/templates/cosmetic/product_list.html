@@ -2,110 +2,263 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="row">
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="{% static 'images/product1.jpg' %}" class="card-img-top" alt="Product 1" style="height: 200px; object-fit: cover;">
-                <div class="card-body">
-                    <h5 class="card-title">Палетка теней</h5>
-                    <p class="card-text">Палетка теней с роскошной кремовой формулойа, состоящая из 16 ультра-пигментированных и легко растушевываемых нейтральных оттенков с матовым и блестящим финишем, которые ложатся на веко ровным слоем.
-                    <a href="#" class="btn btn-primary">Подробнее</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="{% static 'images/product2.jpg' %}" class="card-img-top" alt="Product 2" style="height: 200px; object-fit: cover;">
-                <div class="card-body">
-                    <h5 class="card-title">Тушь</h5>
-                    <p class="card-text">Сенсационная и самая нашумевшая премьера в декоративной косметике - тушь CABARET PREMIÈRE с эффектом сценического объема - выпускается не только не только в классическом черном цвете, но и в ярких ультрамодных оттенках: Violette, Blue, Green, Brown.
-
-                        Уникальная пластиковая щеточка с зауженным кончиком позволяет равномерно распределить тушь по ресницам, разделяя их и придавая феноменальный объем!</p>
-                    <a href="#" class="btn btn-primary">Подробнее</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="{% static 'images/product3.jpg' %}" class="card-img-top" alt="Product 3" style="height: 200px; object-fit: cover;">
-                <div class="card-body">
-                    <h5 class="card-title">Помада</h5>
-                    <p class="card-text">Добавьте красок вашему макияжу! Широкая палитра 3INA предлагает богатый выбор оттенков помады, которая подарит насыщенный цвет вашим губам.</p>
-                    <a href="#" class="btn btn-primary">Подробнее</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="{% static 'images/product4.jpg' %}" class="card-img-top" alt="Product 4" style="height: 200px; object-fit: cover;">
-                <div class="card-body">
-                    <h5 class="card-title">Тональный крем SPF 16
-                    </h5>
-                    <p class="card-text">Жидкий тональный крем Accord Parfait от L'Oreal Paris выравнивает тон, подстраивается к цвету и текстуре кожи. Заметно преображает кожу за 2 недели применения: кожа более гладкая и сияющая.
-
-                        Ультра-тонкие пигменты подстраиваются под тон и подтон кожи. Формула на 80%, состоящая из увлажняющего крема с гиалуроновой кислотой. 24 часа увлажнения вашей кожи. Естественный финиш, сияющая кожа. SPF 16.</p>
-                    <a href="#" class="btn btn-primary">Подробнее</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="{% static 'images/product5.jpg' %}" class="card-img-top" alt="Product 5" style="height: 200px; object-fit: cover;">
-                <div class="card-body">
-                    <h5 class="card-title">Объемная тушь с микроаппликатором 3D</h5>
-                    <p class="card-text">Эластичная формула слой за слоем создает желаемый объем от натурального до вау-эффекта. Чтобы одним движением прокрасить верхние, нижние и вот-даже-те-маленькие реснички в уголках глаз. 3D микро щеточка не упустит ни одну ресничку, легко наслаивая тушь каждым взмахом.
-                        Простое нанесение и легковесность обеспечивается за счет 200% водосвязующего полимера в составе.</p>
-                    <a href="#" class="btn btn-primary">Подробнее</a>
-                </div>
-            </div>
-        </div>
+<div class="container my-5">
+    <!-- Заголовок и кнопка добавления -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5 fw-bold text-pink">Наши товары</h1>
+        <a href="{% url 'cosmetic:product_add' %}" class="btn btn-gradient-pink rounded-pill px-4">
+            <i class="fas fa-plus me-2"></i>Добавить товар
+        </a>
+        
     </div>
+
+    <!-- Список товаров -->
+    <div class="row g-4">
+        {% for product in products %}
+        <div class="col-lg-4 col-md-6">
+            <div class="card product-card h-100 border-0 shadow-sm">
+                <!-- Бейдж хитов продаж -->
+                {% if product.is_best_seller %}
+                <div class="best-seller-badge">Хит</div>
+                {% endif %}
+                
+                <!-- Изображение товара -->
+                <div class="product-image-wrapper">
+                    {% if product.image_url %}
+    <img src="{{ product.image_url }}" class="product-img" alt="{{ product.name }}">
+{% else %}
+    <img src="{% static 'images/no-image.png' %}" class="product-img" alt="Нет фото">
+{% endif %}
+                </div>
+                
+                <!-- Тело карточки -->
+                <div class="card-body d-flex flex-column pt-4">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">{{ product.name }}</h5>
+                        {% if product.discount %}
+                        <span class="discount-badge">-{{ product.discount }}%</span>
+                        {% endif %}
+                    </div>
+                    
+                    <p class="card-text text-muted mb-3">{{ product.description|truncatechars:100 }}</p>
+                    
+                    <!-- Цена и рейтинг -->
+                    <div class="mt-auto">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="rating-stars me-2">
+                                ★★★★☆
+                            </div>
+                            <small class="text-muted">({{ product.reviews_count|default:"0" }})</small>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="price">
+                                {% if product.discounted_price %}
+                                    <span class="current-price">{{ product.discounted_price }} ₽</span>
+                                    <span class="old-price">{{ product.price }} ₽</span>
+                                {% else %}
+                                    <span class="current-price">{{ product.price }} ₽</span>
+                                {% endif %}
+                            </div>
+                            <a href="{% url 'cosmetic:add_to_cart' product.product_id %}" class="btn btn-pink-circle">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Кнопки действий -->
+                <div class="card-footer bg-transparent border-0 pt-0 pb-4">
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'cosmetic:product_edit' product.product_id %}" class="btn btn-outline-pink btn-sm rounded-pill px-3">
+                            <i class="fas fa-edit me-1"></i>Изменить
+                        </a>
+                        <a href="{% url 'cosmetic:product_delete' product.product_id %}" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                            <i class="fas fa-trash-alt me-1"></i>Удалить
+                        </a>
+                        <a href="{% url 'cosmetic:product_detail' product.product_id %}" class="btn btn-pink btn-sm rounded-pill px-3">
+                            <i class="fas fa-info-circle me-1"></i>Подробнее
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <img src="{% static 'images/empty-cart.svg' %}" alt="Нет товаров" class="img-fluid mb-4" style="max-height: 200px;">
+            <h4 class="text-muted">Товары не найдены</h4>
+            <p class="text-muted">Попробуйте изменить параметры поиска</p>
+            <a href="{% url 'cosmetic:product_add' %}" class="btn btn-gradient-pink rounded-pill px-4 mt-2">
+                <i class="fas fa-plus me-2"></i>Добавить первый товар
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{% url 'cosmetic:home' %}" class="btn btn-outline-pink rounded-pill">
+            <i class="fas fa-arrow-left me-2"></i>На главную
+        </a>
 </div>
 
 <style>
-.card {
-    transition: transform 0.3s ease;
-    border-radius: 10px;
+/* Цветовая схема */
+:root {
+    --pink: #FF69B4;
+    --pink-light: #FFB6C1;
+    --pink-dark: #DB4D8E;
+    --pink-gradient: linear-gradient(135deg, #FF69B4 0%, #FF8E9E 100%);
+}
+
+/* Общие стили */
+.text-pink {
+    color: var(--pink);
+}
+.bg-pink {
+    background-color: var(--pink);
+}
+
+/* Карточка товара */
+.product-card {
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    background: white;
+}
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(255, 105, 180, 0.15);
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+/* Изображение товара */
+.product-image-wrapper {
+    height: 220px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fef6f9;
+    position: relative;
 }
-
-.card-img-top {
-    transition: transform 0.3s ease;
+.product-img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
 }
-
-.card:hover .card-img-top {
+.product-card:hover .product-img {
     transform: scale(1.05);
 }
 
-.btn-primary {
-    background-color: #FF69B4;
-    border-color: #FF69B4;
+/* Бейджи */
+.best-seller-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: var(--pink-gradient);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.discount-badge {
+    background: #ff4081;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
 }
 
-.btn-primary:hover {
-    background-color: #FF1493;
-    border-color: #FF1493;
+/* Цена */
+.price {
+    font-weight: 600;
+}
+.current-price {
+    color: var(--pink);
+    font-size: 1.2rem;
+}
+.old-price {
+    color: #999;
+    text-decoration: line-through;
+    font-size: 0.9rem;
+    margin-left: 5px;
 }
 
-.card-title {
-    color: #FF69B4;
-    margin-bottom: 0.75rem;
+/* Кнопки */
+.btn-gradient-pink {
+    background: var(--pink-gradient);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+.btn-gradient-pink:hover {
+    background: linear-gradient(135deg, var(--pink-dark) 0%, #FF7A8A 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+}
+.btn-pink {
+    background-color: var(--pink);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+.btn-pink:hover {
+    background-color: var(--pink-dark);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.2);
+}
+.btn-outline-pink {
+    color: var(--pink);
+    border-color: var(--pink);
+}
+.btn-outline-pink:hover {
+    background-color: var(--pink);
+    color: white;
+}
+.btn-pink-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--pink);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+.btn-pink-circle:hover {
+    background-color: var(--pink-dark);
+    transform: scale(1.1);
 }
 
-.card-text {
-    color: #666;
+/* Рейтинг */
+.rating-stars {
+    color: #FFC107;
+    letter-spacing: 2px;
+}
+
+/* Адаптивность */
+@media (max-width: 767px) {
+    .product-image-wrapper {
+        height: 180px;
+    }
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .card-footer .d-flex {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .card-footer .btn {
+        flex: 1;
+        min-width: 100px;
+    }
 }
 </style>
 {% endblock %}
